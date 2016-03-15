@@ -1,6 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('user_index') }}">Login</a>
-    <a href="{{ path('user_index') }}">Register</a>
+        <div ng-app="app">
+            <div ng-controller="AdressBookCtrl">
+                <ul ng-repeat="contact in contacts">
+                    <li ng-repeat="details in contact" ng-click="details(details.id)">|| details.username ||</li>
+                </ul>
+            </div>
+        </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var user = "{{ user }}";
+    </script>
+    <script src="{{ asset('js/app.js') }}"></script>
 {% endblock %}

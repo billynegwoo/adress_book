@@ -74,3 +74,12 @@ fos_user:
     registration:
             form:
                 type: AppBundle\Form\RegistrationType
+
+# CORS configuration
+nelmio_cors:
+    paths:
+        '^/':
+          allow_origin: ['*']
+          allow_headers: ['x-requested-with']
+          allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+          max_age: 3600
