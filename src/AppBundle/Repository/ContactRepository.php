@@ -40,4 +40,17 @@ class ContactRepository extends EntityRepository
         return $contacts;
 
     }
+
+    public function deleteContact($user_id, $contact_id){
+        return $this->getEntityManager()
+            ->createQuery(
+              'DELETE FROM AppBundle:Contact t
+              WHERE t.userId = :user_id
+              AND t.contactId = :contact_id'
+            )->setParameters([
+                'user_id'=> $user_id,
+                'contact_id'=> $contact_id
+            ])->getResult();
+    }
+
 }

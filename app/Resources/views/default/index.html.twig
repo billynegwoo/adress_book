@@ -1,20 +1,32 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-        <div ng-app="app">
-            <div ng-controller="AdressBookCtrl">
-                <ul ng-repeat="contact in contacts">
-                    <li ng-repeat="details in contact" ng-click="getDetails(details.id)">|| details.username ||
-                        <span ng-click="delete(details.id)">X</span></li>
-                </ul>
-                <div>
-                    <div>phone : || userDetail.phone_number||  adress : || userDetail.adress ||</div>
-                </div>
+    <div ng-app="app">
+        <div ng-controller="AdressBookCtrl">
+            <h3>My contacts</h3>
+            <ul ng-repeat="contact in contacts">
+                <li ng-repeat="details in contact"><span ng-click="getDetails(details.id)">|| details.username ||</span>
+                    <button ng-click="delete(details.id)">delete</button>
+                </li>
+            </ul>
+            <div>
+                <div>phone : || userDetail.phone_number||  adress : || userDetail.adress ||</div>
             </div>
+            <h3>Find a contact</h3>
+            <from>
+                <input name="search" type="text" placeholder="Search user" ng-model="value">
+                <input type="button" value="Search" ng-click="search()">
+            </from>
+            <div>phone : || searchResult.phone_number||  adress : || searchResult.adress ||</div>
+
 
         </div>
 
+    </div>
+
+
 {% endblock %}
+
 
 
 {% block javascripts %}
