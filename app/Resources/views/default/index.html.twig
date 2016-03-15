@@ -4,10 +4,16 @@
         <div ng-app="app">
             <div ng-controller="AdressBookCtrl">
                 <ul ng-repeat="contact in contacts">
-                    <li ng-repeat="details in contact" ng-click="details(details.id)">|| details.username ||</li>
+                    <li ng-repeat="details in contact" ng-click="getDetails(details.id)">|| details.username ||
+                        <span ng-click="delete(details.id)">X</span></li>
                 </ul>
+                <div>
+                    <div>phone : || userDetail.phone_number||  adress : || userDetail.adress ||</div>
+                </div>
             </div>
+
         </div>
+
 {% endblock %}
 
 

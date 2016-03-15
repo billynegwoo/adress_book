@@ -8,11 +8,20 @@ App.controller('AdressBookCtrl', ['$scope','$http', function($scope, $http) {
         }
     );
 
-    $scope.details = function(id){
+    $scope.getDetails= function(id){
         $http.get('http://127.0.0.1:8000/user/'+ id).then(
             function successCallback(data){
                 console.log(data);
-                $scope.userDetail = data;
+                $scope.userDetail = data.data;
+            }
+        );
+    };
+
+    $scope.delete= function(id){
+        $http.get('http://127.0.0.1:8000/user/'+ id).then(
+            function successCallback(data){
+                console.log(data);
+                $scope.userDetail = data.data;
             }
         );
     }

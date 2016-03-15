@@ -67,14 +67,13 @@ class UserController extends Controller
      * @Route("/{id}", name="user_show")
      * @Method("GET")
      */
-    public function showAction(User $user)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($user);
-
-        return $this->render('user/show.html.twig', array(
-            'user' => $user,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->find($id);
+        return new JsonResponse([
+            'adress' => $user->getAdress(),
+            'phone_number'=> $user->getPhoneNumber()
+        ]);
     }
 
     /**
