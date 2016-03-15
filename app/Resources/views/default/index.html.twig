@@ -17,9 +17,9 @@
                 <input name="search" type="text" placeholder="Search user" ng-model="value">
                 <input type="button" value="Search" ng-click="search()">
             </from>
-            <div>phone : || searchResult.phone_number||  adress : || searchResult.adress ||</div>
-
-
+            <div>username : || searchResult.username || phone : || searchResult.phone_number||  adress : || searchResult.adress ||
+                <button ng-click="add(searchResult.id)">Add</button>
+            </div>
         </div>
 
     </div>

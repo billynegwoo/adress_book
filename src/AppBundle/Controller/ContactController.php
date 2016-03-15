@@ -63,9 +63,27 @@ class ContactController extends Controller
         return new JsonResponse([
             'username'=>$user->getUserName(),
             'adress'=> $user->getAdress(),
-            'phone'=> $user->getPhoneNumber(),
+            'phone_number'=> $user->getPhoneNumber(),
             'id' => $user->getId()
         ]);
+    }
+
+    /**
+     * add a  contact.
+     *
+     * @Route("/add", name="add_contact")
+     * @Method("POST")
+     */
+    public function addContactAction(Request $request){
+        $params = json_decode($request->getContent());
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $params->me]);
+        $contact = new Contact();
+        $contact->setContactId($params->id);
+        $contact->setUserId($user->getId());
+        $em->persist($contact);
+        $em->flush();
+        return new JsonResponse(['message'=>$contact]);
     }
 
 }

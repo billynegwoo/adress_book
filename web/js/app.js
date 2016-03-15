@@ -1,17 +1,18 @@
 var App = angular.module('app',[]);
 
 App.controller('AdressBookCtrl', ['$scope','$http', function($scope, $http) {
-console.log(user);
-    $http.get('http://127.0.0.1:8000/contact/'+ user).then(
-        function successCallback(data){
-            $scope.contacts = data.data.contacts;
-        }
-    );
+    var init = function(){
+        $http.get('http://127.0.0.1:8000/contact/'+ user).then(
+            function successCallback(data){
+                $scope.contacts = data.data.contacts;
+            }
+        );
+    };
+
 
     $scope.getDetails= function(id){
         $http.get('http://localhost:8000/user/'+ id).then(
             function successCallback(data){
-                console.log(data);
                 $scope.userDetail = data.data;
             }
         );
@@ -22,6 +23,7 @@ console.log(user);
             id : id,
             me: user
         });
+        init();
     };
 
     $scope.search = function(){
@@ -30,7 +32,15 @@ console.log(user);
                 $scope.searchResult = data.data;
             }
         );
-    }
+    };
+    $scope.add = function(id){
+        $http.post('/contact/add', {
+            id : id,
+            me: user
+        });
+        init();
+    };
+    init()
 }]);
 
 

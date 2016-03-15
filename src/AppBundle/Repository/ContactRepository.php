@@ -52,5 +52,4 @@ class ContactRepository extends EntityRepository
                 'contact_id'=> $contact_id
             ])->getResult();
     }
-
 }
