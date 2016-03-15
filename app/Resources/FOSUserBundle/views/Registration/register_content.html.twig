@@ -1,0 +1,61 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col m10 offset-m1 s12">
+            <h2 class="center-align">{{ 'register'|trans }}</h2>
+            <div class="row">
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register col s12'}}) }}
+                    <div class="row">
+                        <div class="input-field col m6 s12">
+                            {{ form_label(form.username) }}
+                            {{ form_widget(form.username) }}
+                            {{ form_errors(form.username) }}
+                        </div>
+                        <div class="input-field col m6 s12">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            {{ form_label(form.plainPassword.first) }}
+                            {{ form_widget(form.plainPassword.first) }}
+                            {{ form_errors(form.plainPassword.first) }}
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            {{ form_label(form.plainPassword.second) }}
+                            {{ form_widget(form.plainPassword.second) }}
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="input-field">
+                        {{ form_label(form.phone_number) }}
+                        {{ form_widget(form.phone_number) }}
+                        {{ form_errors(form.phone_number) }}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        {{ form_label(form.adress) }}
+                        {{ form_widget(form.adress) }}
+                        {{ form_errors(form.adress) }}
+
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col m12">
+                            <p class="right-align"><button type="submit" id="_submit" name="_submit"
+                                                           class="btn btn-large waves-effect waves-light">{{ 'registration.submit'|trans }}</button></p>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

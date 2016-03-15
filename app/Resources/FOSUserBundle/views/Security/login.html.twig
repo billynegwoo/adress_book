@@ -1,0 +1,45 @@
+{% extends "layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col m10 offset-m1 s12">
+                <h2 class="center-align">{{ 'login'|trans }}</h2>
+                <div class="row">
+                    <form class="col s12" action="{{ path("fos_user_security_check") }}" method="post">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                        <div class="row">
+                            <div class="input-field col m6 s12">
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="validate"/>
+                                <label for="username">{{ 'security.login.username'|trans }}</label>
+                            </div>
+                            <div class="input-field col m6 s12">
+                                <input type="password" id="password" name="_password" required="required" class="validate"/>
+                                <label for="password">{{ 'security.login.password'|trans }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="validate"/>
+                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col m12">
+                                <p class="right-align"><button id="_submit" name="_submit" class="btn btn-large waves-effect waves-light" >{{ 'security.login.submit'|trans }}</button></p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock fos_user_content %}
+
+
