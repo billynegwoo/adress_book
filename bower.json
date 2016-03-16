@@ -1,0 +1,22 @@
+{
+  "name": "adress_book",
+  "homepage": "https://github.com/billynegwoo/adress_book",
+  "authors": [
+    "blonde_q <blonde_q@epitech.eu>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.0"
+  }
+}

@@ -42,9 +42,9 @@ class ContactController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
 
-        $contacts = $this->getDoctrine()->getManager()->getRepository('AppBundle:Contact')->getUserContacts($user->getId());
+        $contacts = $em->getRepository('AppBundle:Contact')->getUserContacts($user->getId());
         return new JsonResponse(['contacts' => $contacts]);
 
     }

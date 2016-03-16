@@ -5,8 +5,9 @@
         <div ng-controller="AdressBookCtrl">
             <h3>My contacts</h3>
             <ul ng-repeat="contact in contacts">
-                <li ng-repeat="details in contact"><span ng-click="getDetails(details.id)">|| details.username ||</span>
+                <li ng-repeat="details in contact"><a ng-click="getDetails(details.id)">|| details.username ||</a>
                     <button ng-click="delete(details.id)">delete</button>
+                    <button ng-click="locate(details.adress)">locate</button>
                 </li>
             </ul>
             <div>
@@ -20,10 +21,10 @@
             <div>username : || searchResult.username || phone : || searchResult.phone_number||  adress : || searchResult.adress ||
                 <button ng-click="add(searchResult.id)">Add</button>
             </div>
+           <div id="map"></div>
         </div>
 
     </div>
-
 
 {% endblock %}
 
@@ -34,5 +35,7 @@
     <script>
         var user = "{{ user }}";
     </script>
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+    <script src="{{ asset('/assets/vendor/angular/angular.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 {% endblock %}
