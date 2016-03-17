@@ -1,6 +1,7 @@
 var App = angular.module('app', []);
 
 App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
+
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: {lat: -34.397, lng: 150.644}
@@ -10,19 +11,23 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
 
     var init = function () {
         $http.get('http://127.0.0.1:8000/contact/' + user).then(
-            function successCallback(data) {
+            function (data) {
                 $scope.contacts = data.data.contacts;
             }
         );
     };
-
+    $http.get('http://127.0.0.1:8000/currentuser').then(
+        function (data) {
+            console.log(data);
+        }
+    );
     var geocodeAddress = function (geocoder, resultsMap, address) {
         geocoder.geocode({'address': address}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 resultsMap.setCenter(results[0].geometry.location);
                 new google.maps.Marker({
                     map: resultsMap,
-                    position: results[0].geometry.location,
+                    position: results[0].geometry.location
                 });
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
@@ -42,7 +47,7 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $scope.search = function () {
         $http.get('http://localhost:8000/contact/find/' + $scope.value).then(
-            function successCallback(data) {
+            function(data) {
                 $scope.searchResult = data.data;
             }
         );
@@ -51,8 +56,8 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
         $http.post('/contact/add', {
             id: id,
             me: user
-        }).then(function () {
-                init()
+        }).then(function (data) {
+                console.log(data);
             }
         );
     };
