@@ -58,14 +58,9 @@ class ContactController extends Controller
     public function findAction($username){
         $em = $this->getDoctrine()->getManager();
 
-        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+        $user = $em->getRepository('AppBundle:Contact')->searchContact($username);
 
-        return new JsonResponse([
-            'username'=>$user->getUserName(),
-            'adress'=> $user->getAdress(),
-            'phone_number'=> $user->getPhoneNumber(),
-            'id' => $user->getId()
-        ]);
+        return new JsonResponse($user);
     }
 
     /**

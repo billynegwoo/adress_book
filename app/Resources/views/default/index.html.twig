@@ -2,26 +2,50 @@
 
 {% block body %}
     <div ng-app="app">
-        <div ng-controller="AdressBookCtrl">
+        <div ng-controller="AdressBookCtrl" class="container">
             <h3>My contacts</h3>
-            <ul ng-repeat="contact in contacts">
-                <li ng-repeat="details in contact"><a ng-click="getDetails(details.id)">|| details.username ||</a>
-                    <button ng-click="delete(details.id)">delete</button>
-                    <button ng-click="locate(details.adress)">locate</button>
-                </li>
-            </ul>
-            <div>
-                <div>phone : || userDetail.phone_number||  adress : || userDetail.adress ||</div>
+
+            <div class="row">
+
+                <div ng-repeat="contact in contacts">
+
+                    <div class="card col m4" ng-repeat="details in contact">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator"
+                                 src="http://xaharts.org/funny/i/gitopuss/github-octocat_yes-we-code.jpg">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">|| details.username ||<i
+                                        class="material-icons right">more_vert</i></span>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">|| details.username ||<i
+                                        class="material-icons right">close</i></span>
+
+                            <p>
+                                Phone : || details.phone_number ||<br>
+                                Adress : || details.adress ||
+                            </p>
+
+                            <button class="waves-effect waves-light btn" ng-click="delete(details.id)">delete</button>
+                            <button class="waves-effect waves-light btn" ng-click="locate(details.adress)">locate</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+
             <h3>Find a contact</h3>
             <from>
                 <input name="search" type="text" placeholder="Search user" ng-model="value">
                 <input type="button" value="Search" ng-click="search()">
             </from>
-            <div>username : || searchResult.username || phone : || searchResult.phone_number||  adress : || searchResult.adress ||
+            <div>username : || searchResult.username || phone : || searchResult.phone_number|| adress : ||
+                searchResult.adress ||
                 <button ng-click="add(searchResult.id)">Add</button>
             </div>
-           <div id="map"></div>
+            <div id="map"></div>
         </div>
 
     </div>

@@ -2,7 +2,7 @@ var App = angular.module('app', []);
 
 App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
+        zoom: 10,
         center: {lat: -34.397, lng: 150.644}
     });
 
@@ -20,22 +20,14 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
         geocoder.geocode({'address': address}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
+                new google.maps.Marker({
                     map: resultsMap,
-                    position: results[0].geometry.location
+                    position: results[0].geometry.location,
                 });
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         })
-    };
-
-    $scope.getDetails = function (id) {
-        $http.get('http://localhost:8000/user/' + id).then(
-            function successCallback(data) {
-                $scope.userDetail = data.data;
-            }
-        );
     };
 
     $scope.delete = function (id) {
