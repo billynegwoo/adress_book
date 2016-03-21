@@ -80,14 +80,4 @@ class Contact
     {
         return $this->contactId;
     }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }

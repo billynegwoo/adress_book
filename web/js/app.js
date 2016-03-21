@@ -2,6 +2,8 @@ var App = angular.module('app', []);
 
 App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
 
+    var user;
+
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: {lat: -34.397, lng: 150.644}
@@ -10,17 +12,18 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
     var geocoder = new google.maps.Geocoder();
 
     var init = function () {
-        $http.get('http://127.0.0.1:8000/contact/' + user).then(
+        $http.get('/currentuser').then(
             function (data) {
-                $scope.contacts = data.data.contacts;
-            }
-        );
+                user = data.data;
+                $http.get('/contact/' + data.data).then(
+                    function (data) {
+                        $scope.contacts = data.data.contacts;
+                    }
+                );
+            });
+
     };
-    $http.get('http://127.0.0.1:8000/currentuser').then(
-        function (data) {
-            console.log(data);
-        }
-    );
+
     var geocodeAddress = function (geocoder, resultsMap, address) {
         geocoder.geocode({'address': address}, function (results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
@@ -46,8 +49,8 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
     };
 
     $scope.search = function () {
-        $http.get('http://localhost:8000/contact/find/' + $scope.value).then(
-            function(data) {
+        $http.get('/contact/find/' + $scope.value).then(
+            function (data) {
                 $scope.searchResult = data.data;
             }
         );

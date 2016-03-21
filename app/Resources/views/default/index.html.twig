@@ -80,9 +80,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        var user = "{{ user }}";
-    </script>
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
     <script src="{{ asset('/assets/vendor/angular/angular.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>

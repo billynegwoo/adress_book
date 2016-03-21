@@ -6,15 +6,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        return $this->render('default/index.html.twig', ['user' => $this->get('security.token_storage')->getToken()->getUser()]);
+        return $this->render('default/index.html.twig');
     }
 
     /**
@@ -22,6 +23,6 @@ class DefaultController extends Controller
      */
     public function  getCurrentUser()
     {
-        return new JsonResponse($this->container->get('security.context')->getToken()->getUser());
+        return new Response($this->get('security.token_storage')->getToken()->getUser());
     }
 }
