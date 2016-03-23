@@ -23,30 +23,37 @@ class ContactController extends Controller
      * @Route("/delete", name="user_contact_delete")
      * @Method("POST")
      */
-    public function deleteUserContactAction(Request $request){
+    public function deleteUserContactAction(Request $request)
+    {
         $params = json_decode($request->getContent());
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $params->me]);
-        $em->getRepository('AppBundle:Contact')->deleteContact($user->getId(), $params->id);
-        return new JsonResponse(['message'=>'success']);
+        $contact = $em->getRepository('AppBundle:Contact')->find($params->id);
+        $em->remove($contact);
+        $em->flush();
+        return new JsonResponse(['message' => 'success']);
     }
 
 
     /**
      * Get all User contacts.
      *
-     * @Route("/{username}", name="user_contact")
+     * @Route("/", name="user_contact")
      * @Method("GET")
      */
-    public function userContactAction($username)
+    public function userContactAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
-
-        $contacts = $em->getRepository('AppBundle:Contact')->getUserContacts($user->getId());
-        return new JsonResponse(['contacts' => $contacts]);
-
+        $myContacts = [];
+        $contacts = $this->getUser()->getContacts();
+        $i = 0;
+        foreach ($contacts as $key => $value) {
+            $myContacts[$i]['address'] = $value->getAdress();
+            $myContacts[$i]['email'] = $value->getEmail();
+            $myContacts[$i]['username'] = $value->getUsername();
+            $myContacts[$i]['phone_number'] = $value->getPhoneNumber();
+            $myContacts[$i]['id'] = $value->getId();
+            $i++;
+        }
+        return new JsonResponse($myContacts);
     }
 
     /**
@@ -55,7 +62,8 @@ class ContactController extends Controller
      * @Route("/find/{username}", name="find_contact")
      * @Method("GET")
      */
-    public function findAction($username){
+    public function findAction($username)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('AppBundle:Contact')->searchContact($username);
@@ -69,16 +77,25 @@ class ContactController extends Controller
      * @Route("/add", name="add_contact")
      * @Method("POST")
      */
-    public function addContactAction(Request $request){
+    public function addContactAction(Request $request)
+    {
         $params = json_decode($request->getContent());
+
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $params->me]);
+        $user = $em->getRepository('AppBundle:User')->find($params->id);
+
         $contact = new Contact();
-        $contact->setContactId($params->id);
-        $contact->setUserId($user->getId());
+
+        $contact->setUser($this->getUser());
+        $contact->setAdress($user->getAdress());
+        $contact->setPhoneNumber($user->getPhoneNumber());
+        $contact->setUsername($user->getUsername());
+        $contact->setEmail($user->getEmail());
+
+        $this->getUser()->addContact($contact);
         $em->persist($contact);
         $em->flush();
-        return new JsonResponse(['message'=>$contact]);
+        return new JsonResponse($contact);
     }
 
 }

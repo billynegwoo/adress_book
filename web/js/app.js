@@ -12,14 +12,9 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
     var geocoder = new google.maps.Geocoder();
 
     var init = function () {
-        $http.get('/currentuser').then(
+        $http.get('/contact/').then(
             function (data) {
-                user = data.data;
-                $http.get('/contact/' + data.data).then(
-                    function (data) {
-                        $scope.contacts = data.data.contacts;
-                    }
-                );
+                $scope.contacts = data.data;
             });
 
     };
@@ -40,8 +35,7 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $scope.delete = function (id) {
         $http.post('/contact/delete', {
-            id: id,
-            me: user
+            id: id
         }).then(function () {
                 init()
             }
@@ -57,10 +51,10 @@ App.controller('AdressBookCtrl', ['$scope', '$http', function ($scope, $http) {
     };
     $scope.add = function (id) {
         $http.post('/contact/add', {
-            id: id,
-            me: user
+            id: id
         }).then(function (data) {
                 console.log(data);
+            init();
             }
         );
     };

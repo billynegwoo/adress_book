@@ -12,47 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
-    public function getUserContacts($id)
-    {
-        $contacts = [];
-        $contacts_ids = $this->getEntityManager()
-            ->createQuery('
-            SELECT t.contactId
-            FROM AppBundle:Contact t
-            WHERE t.userId = :id
-            ')
-            ->setParameters([
-                'id' => $id
-            ])
-            ->getResult();
-        foreach ($contacts_ids as $id) {
-            $contact = $this->getEntityManager()
-                ->createQuery('
-            SELECT t.username , t.adress, t.phone_number, t.id
-            FROM AppBundle:User t
-            WHERE t.id = :id
-            ')
-                ->setParameters([
-                    'id' => $id['contactId']
-                ])->getResult();
-            array_push($contacts, $contact);
-        }
-        return $contacts;
-
-    }
-
-    public function deleteContact($user_id, $contact_id)
-    {
-        return $this->getEntityManager()
-            ->createQuery(
-                'DELETE FROM AppBundle:Contact t
-              WHERE t.userId = :user_id
-              AND t.contactId = :contact_id'
-            )->setParameters([
-                'user_id' => $user_id,
-                'contact_id' => $contact_id
-            ])->getResult();
-    }
 
     public function searchContact($search)
     {

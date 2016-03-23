@@ -5,27 +5,21 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Book
+ * Contact
  *
  * @ORM\Table(name="contact")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
  */
 class Contact
 {
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @var int
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $userId;
+    private $id;
 
     /**
      * @var int
@@ -34,50 +28,161 @@ class Contact
      */
     private $contactId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="contacts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
 
     /**
-     * Set userId
+     * @var string
      *
-     * @param integer $userId
+     * @ORM\Column(name="adress", type="string")
+     */
+    private $adress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string")
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone_number", type="string")
+     */
+    private $phone_number;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string")
+     */
+    protected $email;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
      * @return Contact
      */
-    public function setUserId($userId)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
-     * @return integer 
+     * @return \AppBundle\Entity\User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
-     * Set contactId
+     * Set adress
      *
-     * @param integer $contactId
+     * @param string $adress
      * @return Contact
      */
-    public function setContactId($contactId)
+    public function setAdress($adress)
     {
-        $this->contactId = $contactId;
+        $this->adress = $adress;
 
         return $this;
     }
 
     /**
-     * Get contactId
+     * Get adress
      *
-     * @return integer 
+     * @return string
      */
-    public function getContactId()
+    public function getAdress()
     {
-        return $this->contactId;
+        return $this->adress;
+    }
+
+    /**
+     * Set phone_number
+     *
+     * @param string $phoneNumber
+     * @return Contact
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phone_number = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phone_number
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phone_number;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Contact
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Contact
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }
